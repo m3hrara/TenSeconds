@@ -75,14 +75,14 @@ public class MovementComponent : MonoBehaviour
             */
 
             //movement
+
             if (playerController.isJumping) return;
             if (!(inputVector.magnitude > 0)) moveDirection = Vector3.zero;
 
-            moveDirection = transform.forward * inputVector.y + transform.right * inputVector.x;
+            moveDirection = transform.right * inputVector.x;
             float currentSpeed = playerController.isRunning ? runSpeed : walkSpeed;
 
-            Vector3 movementDirection = moveDirection * (currentSpeed * Time.deltaTime);
-
+            Vector3 movementDirection = moveDirection * (-currentSpeed * Time.deltaTime);
             transform.position += movementDirection;
         }
 
