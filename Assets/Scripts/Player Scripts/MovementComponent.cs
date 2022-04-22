@@ -143,6 +143,11 @@ public class MovementComponent : MonoBehaviour
                 rb.AddForceAtPosition(forceDir * forceMagnitude, transform.position, ForceMode.Impulse);
             }
         }
+        if (collision.gameObject.CompareTag("Cat"))
+        {
+            gameManager.timeLeft += 2f;
+            Destroy(collision.gameObject);
+        }
 
     }
 }

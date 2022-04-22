@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private PlayerController playerController;
     private float laserPosY;
-    private float timeLeft = 10f;
+    public float timeLeft = 10f;
 
     public bool isPaused = false;
     // Start is called before the first frame update
