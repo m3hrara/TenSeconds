@@ -8,6 +8,9 @@ TagManager:
   - moveable
   - Ground
   - Cat
+  - Start
+  - End
+  - Trap
   layers:
   - Default
   - TransparentFX

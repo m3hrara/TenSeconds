@@ -10,8 +10,6 @@ public class MovementComponent : MonoBehaviour
     [SerializeField]
     float walkSpeed = 5;
     [SerializeField]
-    float runSpeed = 10;
-    [SerializeField]
     float jumpForce = 5;
     [SerializeField]
     float forceMagnitude;
@@ -24,11 +22,8 @@ public class MovementComponent : MonoBehaviour
     //references
     Vector2 inputVector = Vector2.zero;
     Vector3 moveDirection = Vector3.zero;
-    Vector2 lookInput = Vector2.zero;
 
     public bool isPaused = false;
-
-    public float aimSensitivity = 0.2f;
 
     //animator hashes
     public readonly int movementXHash = Animator.StringToHash("MovementX");
@@ -48,40 +43,13 @@ public class MovementComponent : MonoBehaviour
     {
         if(!isPaused && !gameManager.isPaused)
         {
-            /*
-            //aiming/looking
-            followTarget.transform.rotation *= Quaternion.AngleAxis(lookInput.x * aimSensitivity, Vector3.up);
-            followTarget.transform.rotation *= Quaternion.AngleAxis(lookInput.y * aimSensitivity, Vector3.left);
-
-            var angles = followTarget.transform.localEulerAngles;
-            angles.z = 0;
-
-            var angle = followTarget.transform.localEulerAngles.x;
-
-            if (angle > 180 && angle < 300)
-            {
-                angles.x = 300;
-            }
-            else if (angle < 180 && angle > 70)
-            {
-                angles.x = 70;
-            }
-
-            followTarget.transform.localEulerAngles = angles;
-
-            //rotate player rotation based on look
-            transform.rotation = Quaternion.Euler(0, followTarget.transform.rotation.eulerAngles.y, 0);
-
-            followTarget.transform.localEulerAngles = new Vector3(angles.x, 0, 0);
-            */
-
             //movement
 
             if (playerController.isJumping) return;
             if (!(inputVector.magnitude > 0)) moveDirection = Vector3.zero;
 
             moveDirection = transform.right * inputVector.x;
-            float currentSpeed = playerController.isRunning ? runSpeed : walkSpeed;
+            float currentSpeed = walkSpeed;
 
             Vector3 movementDirection = moveDirection * (-currentSpeed * Time.deltaTime);
             transform.position += movementDirection;
@@ -118,12 +86,19 @@ public class MovementComponent : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Laser"))
+        //if (other.gameObject.CompareTag("Laser"))
+        //{
+        //    Time.timeScale = 0;
+        //    gameManager.isPaused = true;
+        //    gameManager.winLose.text = "YOU LOST!";
+        //    gameManager.endPanel.SetActive(true);
+        //}
+    }
+    private void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Trap"))
         {
-            Time.timeScale = 0;
-            gameManager.isPaused = true;
-            gameManager.winLose.text = "YOU LOST!";
-            gameManager.endPanel.SetActive(true);
+            StartCoroutine(slowDown());
         }
     }
     private void OnCollisionEnter(Collision collision)
@@ -149,6 +124,19 @@ public class MovementComponent : MonoBehaviour
             gameManager.timeLeft += 2f;
             Destroy(collision.gameObject);
         }
+        if (collision.gameObject.CompareTag("Trap"))
+        {
+            walkSpeed = 2f;
+        }
 
+    }
+    
+    IEnumerator slowDown()
+    {
+        for(float speed =2f; speed<= 5f; speed+=0.1f)
+        {
+            walkSpeed = speed;
+            yield return null;
+        }
     }
 }
