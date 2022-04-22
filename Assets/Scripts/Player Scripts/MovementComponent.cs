@@ -145,6 +145,7 @@ public class MovementComponent : MonoBehaviour
         }
         if (collision.gameObject.CompareTag("Cat"))
         {
+            gameManager.audioSource.Play();
             gameManager.timeLeft += 2f;
             Destroy(collision.gameObject);
         }

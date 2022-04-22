@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
     public TMP_Text winLose;
     public GameObject endPanel;
     public TMP_Text timerText;
-
+    public AudioSource audioSource;
 
     [SerializeField]
     private GameObject laser;
