@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 
 public class MovementComponent : MonoBehaviour
 {
+    public bool isGrounded = true;
     [SerializeField]
     private GameManager gameManager;
     [SerializeField]
@@ -54,7 +55,16 @@ public class MovementComponent : MonoBehaviour
             Vector3 movementDirection = moveDirection * (-currentSpeed * Time.deltaTime);
             transform.position += movementDirection;
         }
-
+        if(!isGrounded)
+        {
+            playerController.isJumping = true;
+            playerAnimator.SetBool(isJumpingHash, true);
+        }
+        else if(isGrounded)
+        {
+            playerController.isJumping = false;
+            playerAnimator.SetBool(isJumpingHash, false);
+        }
     }
 
     public void OnMovement(InputValue value)
@@ -86,13 +96,26 @@ public class MovementComponent : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        //if (other.gameObject.CompareTag("Laser"))
-        //{
-        //    Time.timeScale = 0;
-        //    gameManager.isPaused = true;
-        //    gameManager.winLose.text = "YOU LOST!";
-        //    gameManager.endPanel.SetActive(true);
-        //}
+        if (other.gameObject.CompareTag("Laser"))
+        {
+            Time.timeScale = 0;
+            gameManager.isPaused = true;
+            gameManager.winLose.text = "YOU LOST!";
+            gameManager.endPanel.SetActive(true);
+        }
+        if (other.gameObject.CompareTag("Bottom"))
+        {
+            Time.timeScale = 0;
+            gameManager.isPaused = true;
+            gameManager.winLose.text = "YOU WON!";
+            gameManager.endPanel.SetActive(true);
+        }
+        if (other.gameObject.CompareTag("Cat"))
+        {
+            gameManager.audioSource.Play();
+            gameManager.timeLeft += 1f;
+            Destroy(other.gameObject);
+        }
     }
     private void OnCollisionExit(Collision collision)
     {
@@ -100,30 +123,21 @@ public class MovementComponent : MonoBehaviour
         {
             StartCoroutine(slowDown());
         }
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            isGrounded = false;
+        }
     }
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Ground") && !playerController.isJumping) return;
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            isGrounded = true;
+            playerController.isJumping = false;
+            playerAnimator.SetBool(isJumpingHash, false);
+        }
 
-        playerController.isJumping = false;
-        playerAnimator.SetBool(isJumpingHash, false);
-        if(collision.gameObject.CompareTag("moveable"))
-        {
-            Rigidbody rb = collision.collider.attachedRigidbody;
-            if(rb !=null)
-            {
-                Vector3 forceDir = collision.gameObject.transform.position - transform.position;
-                forceDir.y = 0;
-                forceDir.Normalize();
-                rb.AddForceAtPosition(forceDir * forceMagnitude, transform.position, ForceMode.Impulse);
-            }
-        }
-        if (collision.gameObject.CompareTag("Cat"))
-        {
-            gameManager.audioSource.Play();
-            gameManager.timeLeft += 2f;
-            Destroy(collision.gameObject);
-        }
+
         if (collision.gameObject.CompareTag("Trap"))
         {
             walkSpeed = 2f;

@@ -46,11 +46,11 @@ public class GameManager : MonoBehaviour
                 endPanel.SetActive(true);
             }
 
-            laserPosY -= 0.02f;
+            laserPosY -= 0.035f;
             laser.transform.position = new Vector3(laser.transform.position.x, laserPosY, laser.transform.position.z);
-            if(!playerController.isJumping && laserPosY - Blu.transform.position.y >= 3.1f)
+            if(!playerController.isJumping && laserPosY - Blu.transform.position.y >= 5f)
             {
-                laserPosY = Blu.transform.position.y + 3f;
+                laserPosY = Blu.transform.position.y + 4.9f;
             }
         }
 

@@ -11,6 +11,7 @@ TagManager:
   - Start
   - End
   - Trap
+  - Bottom
   layers:
   - Default
   - TransparentFX

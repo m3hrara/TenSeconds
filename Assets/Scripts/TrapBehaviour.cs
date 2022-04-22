@@ -10,9 +10,9 @@ public class TrapBehaviour : MonoBehaviour
     void Update()
     {
         if (goLeft)
-            transform.Translate(Vector3.right * 0.02f);
+            transform.Translate(Vector3.right * 0.03f);
         else if (!goLeft)
-            transform.Translate(Vector3.left * 0.02f);
+            transform.Translate(Vector3.left * 0.03f);
     }
     private void OnTriggerEnter(Collider other)
     {
