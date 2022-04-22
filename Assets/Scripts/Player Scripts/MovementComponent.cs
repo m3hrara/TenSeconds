@@ -5,7 +5,8 @@ using UnityEngine.InputSystem;
 
 public class MovementComponent : MonoBehaviour
 {
-
+    [SerializeField]
+    private GameManager gameManager;
     [SerializeField]
     float walkSpeed = 5;
     [SerializeField]
@@ -45,7 +46,7 @@ public class MovementComponent : MonoBehaviour
 
     void Update()
     {
-        if(!isPaused)
+        if(!isPaused && !gameManager.isPaused)
         {
             /*
             //aiming/looking
@@ -90,9 +91,12 @@ public class MovementComponent : MonoBehaviour
 
     public void OnMovement(InputValue value)
     {
-        inputVector = value.Get<Vector2>();
+        if (!isPaused && !gameManager.isPaused)
+        {
+            inputVector = value.Get<Vector2>();
         playerAnimator.SetFloat(movementXHash, inputVector.x);
         playerAnimator.SetFloat(movementYHash, inputVector.y);
+        }
     }
 
     public void OnRun(InputValue value)
@@ -112,17 +116,16 @@ public class MovementComponent : MonoBehaviour
         rigidbody.AddForce((transform.up + moveDirection) * jumpForce, ForceMode.Impulse);
     }
 
-    //public void OnAim(InputValue value)
-    //{
-    //    playerController.isAiming = value.isPressed;
-    //}
-
-    public void OnLook(InputValue value)
+    private void OnTriggerEnter(Collider other)
     {
-        lookInput = value.Get<Vector2>();
-        // if we aim up,down, adjust anims to have mask that properly animates aim
+        if (other.gameObject.CompareTag("Laser"))
+        {
+            Time.timeScale = 0;
+            gameManager.isPaused = true;
+            gameManager.winLose.text = "YOU LOST!";
+            gameManager.endPanel.SetActive(true);
+        }
     }
-
     private void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Ground") && !playerController.isJumping) return;
@@ -140,5 +143,6 @@ public class MovementComponent : MonoBehaviour
                 rb.AddForceAtPosition(forceDir * forceMagnitude, transform.position, ForceMode.Impulse);
             }
         }
+
     }
 }
