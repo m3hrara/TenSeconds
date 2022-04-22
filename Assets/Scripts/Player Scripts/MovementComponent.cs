@@ -42,6 +42,12 @@ public class MovementComponent : MonoBehaviour
 
     void Update()
     {
+        if (isPaused)
+        {
+            gameManager.isPaused = true;
+        }
+        else
+            gameManager.isPaused = false;
         if(!isPaused && !gameManager.isPaused)
         {
             //movement

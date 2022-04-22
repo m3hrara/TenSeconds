@@ -17,6 +17,8 @@ public class GameManager : MonoBehaviour
     private GameObject Blu;
     [SerializeField]
     private PlayerController playerController;
+    [SerializeField]
+    private MovementComponent movementComponent;
     private float laserPosY;
     public float timeLeft = 10f;
 
@@ -42,6 +44,7 @@ public class GameManager : MonoBehaviour
             {
                 Time.timeScale = 0;
                 isPaused = true;
+                movementComponent.isPaused = true;
                 winLose.text = "YOU LOST!";
                 endPanel.SetActive(true);
             }
