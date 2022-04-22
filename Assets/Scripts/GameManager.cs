@@ -6,13 +6,9 @@ using TMPro;
 public class GameManager : MonoBehaviour
 {
 
-    private int frame, max;
-    public MovementComponent movementComponent;
-    public TMP_Text message;
     public TMP_Text winLose;
     public GameObject endPanel;
-    [SerializeField]
-    private TMP_Text timerText;
+    public TMP_Text timerText;
 
 
     [SerializeField]
@@ -25,24 +21,16 @@ public class GameManager : MonoBehaviour
     public float timeLeft = 10f;
 
     public bool isPaused = false;
-    // Start is called before the first frame update
+
     void Start()
     {
         endPanel.SetActive(false);
         winLose.text = "YOU WON!";
-        /*
-        frame = 0;
-        max = 120;
-        panel.SetActive(false);
-        message.gameObject.SetActive(true);
-        message.text = "Move the boxes to match the pattern on the wall!";
-        winLose.text = "YOU WON!";
-         */
+
         Time.timeScale = 1;
         laserPosY = laser.transform.position.y;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if(!isPaused)

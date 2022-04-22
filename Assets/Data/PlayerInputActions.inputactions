@@ -22,14 +22,6 @@
                     "interactions": "Press"
                 },
                 {
-                    "name": "Run",
-                    "type": "Button",
-                    "id": "8e06a790-57bf-485c-9c9f-70e54bdfd64f",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "Press(behavior=2)"
-                },
-                {
                     "name": "Look",
                     "type": "Value",
                     "id": "75b86bed-8efe-4162-87b8-cfbe27aaaa95",
@@ -102,17 +94,6 @@
                     "processors": "",
                     "groups": "",
                     "action": "Jump",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "043b921c-fceb-4482-b686-b74e4a3c9dff",
-                    "path": "<Keyboard>/leftShift",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Run",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

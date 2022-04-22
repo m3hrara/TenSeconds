@@ -1222,20 +1222,17 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Use WASD and mouse to walk/ look around!
+  m_text: 'Use A/D to move left/right
 
-    Hold Left Shift to sprint!
 
-    Press
-    Spacebar to jump!
+    Pickups gie you extra time
 
-    Move the boxes around to match the pattern on the wall!
 
-    You
-    have to do this twice before you run out of room!
+    Avoid
+    the laser and traps
 
-    The walls will enclose
-    you in less than two minutes!'
+
+    You have 10 seconds to make it to the bottom'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
