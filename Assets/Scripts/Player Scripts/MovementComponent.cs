@@ -47,6 +47,7 @@ public class MovementComponent : MonoBehaviour
     {
         if(!isPaused)
         {
+            /*
             //aiming/looking
             followTarget.transform.rotation *= Quaternion.AngleAxis(lookInput.x * aimSensitivity, Vector3.up);
             followTarget.transform.rotation *= Quaternion.AngleAxis(lookInput.y * aimSensitivity, Vector3.left);
@@ -71,6 +72,7 @@ public class MovementComponent : MonoBehaviour
             transform.rotation = Quaternion.Euler(0, followTarget.transform.rotation.eulerAngles.y, 0);
 
             followTarget.transform.localEulerAngles = new Vector3(angles.x, 0, 0);
+            */
 
             //movement
             if (playerController.isJumping) return;
