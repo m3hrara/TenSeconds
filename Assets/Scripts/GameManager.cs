@@ -35,19 +35,20 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        if(!isPaused)
+        if (timeLeft <= 0.1)
+        {
+            Time.timeScale = 0;
+            isPaused = true;
+            movementComponent.isPaused = true;
+            winLose.text = "YOU LOST!";
+            endPanel.SetActive(true);
+        }
+        if (!isPaused)
         {
             timeLeft -= Time.deltaTime;
             timerText.text = Mathf.Round(timeLeft).ToString();
 
-            if(timeLeft<=0.1)
-            {
-                Time.timeScale = 0;
-                isPaused = true;
-                movementComponent.isPaused = true;
-                winLose.text = "YOU LOST!";
-                endPanel.SetActive(true);
-            }
+
 
             laserPosY -= 0.035f;
             laser.transform.position = new Vector3(laser.transform.position.x, laserPosY, laser.transform.position.z);

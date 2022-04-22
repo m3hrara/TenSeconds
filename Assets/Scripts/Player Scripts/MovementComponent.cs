@@ -106,6 +106,7 @@ public class MovementComponent : MonoBehaviour
         {
             Time.timeScale = 0;
             gameManager.isPaused = true;
+            isPaused = true;
             gameManager.winLose.text = "YOU LOST!";
             gameManager.endPanel.SetActive(true);
         }
@@ -113,6 +114,7 @@ public class MovementComponent : MonoBehaviour
         {
             Time.timeScale = 0;
             gameManager.isPaused = true;
+            isPaused = true;
             gameManager.winLose.text = "YOU WON!";
             gameManager.endPanel.SetActive(true);
         }
@@ -122,13 +124,21 @@ public class MovementComponent : MonoBehaviour
             gameManager.timeLeft += 1f;
             Destroy(other.gameObject);
         }
+        if (other.gameObject.CompareTag("Trap"))
+        {
+            walkSpeed = 2f;
+        }
     }
-    private void OnCollisionExit(Collision collision)
+    private void OnTriggerExit(Collider other)
     {
-        if (collision.gameObject.CompareTag("Trap"))
+        if (other.gameObject.CompareTag("Trap"))
         {
             StartCoroutine(slowDown());
         }
+    }
+    private void OnCollisionExit(Collision collision)
+    {
+
         if (collision.gameObject.CompareTag("Ground"))
         {
             isGrounded = false;
@@ -144,10 +154,7 @@ public class MovementComponent : MonoBehaviour
         }
 
 
-        if (collision.gameObject.CompareTag("Trap"))
-        {
-            walkSpeed = 2f;
-        }
+
 
     }
     
