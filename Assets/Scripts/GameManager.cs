@@ -11,7 +11,8 @@ public class GameManager : MonoBehaviour
     public TMP_Text message;
     public TMP_Text winLose;
     public GameObject endPanel;
-
+    [SerializeField]
+    private TMP_Text timerText;
 
 
     [SerializeField]
@@ -21,6 +22,7 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private PlayerController playerController;
     private float laserPosY;
+    private float timeLeft = 10f;
 
     public bool isPaused = false;
     // Start is called before the first frame update
@@ -45,6 +47,17 @@ public class GameManager : MonoBehaviour
     {
         if(!isPaused)
         {
+            timeLeft -= Time.deltaTime;
+            timerText.text = Mathf.Round(timeLeft).ToString();
+
+            if(timeLeft<=0.1)
+            {
+                Time.timeScale = 0;
+                isPaused = true;
+                winLose.text = "YOU LOST!";
+                endPanel.SetActive(true);
+            }
+
             laserPosY -= 0.02f;
             laser.transform.position = new Vector3(laser.transform.position.x, laserPosY, laser.transform.position.z);
             if(!playerController.isJumping && laserPosY - Blu.transform.position.y >= 3.1f)
